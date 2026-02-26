@@ -40,17 +40,24 @@ def multiplicacion():
         return render_template("multiplicacion.html", resultado=resultado)
     return render_template("multiplicacion.html")
 
+
+
+
+
 @app.route("/division", methods=["GET", "POST"])
 def division():
     if request.method == "POST":
-        num1 = float(request.form["num1"])
-        num2 = float(request.form["num2"])
-        print(num1 / num2)
-        if num2 != 0:
-            resultado = num1 / num2
-            return render_template("division.html", resultado=resultado)
+        if not request.form.get("numero1") or not request.form.get("numero2"):
+            return f"Ingrese ambos números para realizar la división."
         else:
-            return render_template("error.html") 
+            numero1 = float(request.form.get("numero1"))
+            numero2 = float(request.form.get("numero2"))
+            print(numero1 / numero2)
+            if numero2 != 0:
+                resultado = numero1 / numero2
+                return render_template("division.html", resultado=resultado)
+            else:
+                return f"No se puede dividir por cero." 
     return render_template("division.html")
 
 
